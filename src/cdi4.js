@@ -123,3 +123,57 @@ export const get_4 = (tenantState) => {
         tenantState.firstFactors.includes("link-email")),
   };
 };
+
+export const cdi4CoreBehaviour = (tenantState) => {
+  let state = get_4(tenantState);
+  let res = "";
+
+  if (state.emailPasswordEnabled === false) {
+    res += "emailpassword APIs are blocked\n";
+  } else {
+    res += "emailpassword APIs are allowed\n";
+  }
+
+  if (state.passwordlessEnabled === false) {
+    res += "passwordless APIs are blocked\n";
+  } else {
+    res += "passwordless APIs are allowed\n";
+  }
+
+  if (state.thirdPartyEnabled === false) {
+    res += "thirdParty APIs are blocked\n";
+  } else {
+    res += "thirdParty APIs are allowed\n";
+  }
+
+  return res;
+};
+
+export const backendCdi4Behaviour = (tenantState) => {
+  let state = get_4(tenantState);
+
+  let res = "loginMethodsGET API returns: ";
+  res += JSON.stringify(state, null, 2);
+  res += "\n";
+  res +=
+    "Backend does not use the booleans, but relies on core to block or allow the APIs\n";
+  return res;
+};
+
+export const frontendCdi4Behaviour = (tenantState) => {
+  let state = get_4(tenantState);
+  let res = 'If using dynamic login methods, frontend will show these login methods:';
+  if (state.emailPasswordEnabled) {
+    res += ' emailpassword';
+  }
+  if (state.passwordlessEnabled) {
+    res += ' passwordless';
+  }
+  if (state.thirdPartyEnabled) {
+    res += ' thirdparty';
+  }
+
+  res += '\n';
+  res += 'Else, frontend will show statically defined login methods\n'
+  return res
+}
