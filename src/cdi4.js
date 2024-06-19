@@ -173,6 +173,10 @@ export const frontendCdi4Behaviour = (tenantState) => {
     res += ' thirdparty';
   }
 
+  if (state.emailPasswordEnabled === false && state.passwordlessEnabled === false && state.thirdPartyEnabled === false) {
+    res += ' None';
+  }
+
   res += '\n';
   res += 'Else, frontend will show statically defined login methods\n'
   return res
