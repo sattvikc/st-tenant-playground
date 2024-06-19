@@ -163,23 +163,27 @@ export const backendCdi4Behaviour = (tenantState) => {
 export const frontendCdi4Behaviour = (tenantState) => {
   let state = get_4(tenantState);
 
-  let res = '';
-  let loginMethods = '';
+  let res = "";
+  let loginMethods = "";
   if (state.emailPasswordEnabled) {
-    loginMethods += ' emailpassword';
+    loginMethods += " emailpassword";
   }
   if (state.passwordlessEnabled) {
-    loginMethods += ' passwordless';
+    loginMethods += " passwordless";
   }
   if (state.thirdPartyEnabled) {
-    loginMethods += ' thirdparty';
+    loginMethods += " thirdparty";
   }
 
-  if (state.emailPasswordEnabled === false && state.passwordlessEnabled === false && state.thirdPartyEnabled === false) {
-    loginMethods = ' none'
+  if (
+    state.emailPasswordEnabled === false &&
+    state.passwordlessEnabled === false &&
+    state.thirdPartyEnabled === false
+  ) {
+    loginMethods = " none";
   }
 
-  res += 'ui shows:' + loginMethods;
+  res += "ui shows:" + loginMethods;
 
   return res;
-}
+};

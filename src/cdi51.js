@@ -129,8 +129,6 @@ export const get_v2 = (tenantState) => {
   };
 };
 
-
-
 export const cdi51CoreBehaviour = (tenantState) => {
   let res = "Core does not block any of the APIs";
   return res;
@@ -160,23 +158,27 @@ export const backendCdi51Behaviour = (tenantState) => {
   res += "initialised recipes: ";
   res += "✓\n";
 
-  res += '\nfinal output: ';
+  res += "\nfinal output: ";
 
-  let out = {...state};
+  let out = { ...state };
   if (state.firstFactors === null) {
-    out.firstFactors = "intersection of mfa init firstFactors and initialised recipes";
+    out.firstFactors =
+      "intersection of mfa init firstFactors and initialised recipes";
   } else {
     if (state.firstFactors.length === 0) {
-      out.firstFactors = []
+      out.firstFactors = [];
     } else {
-      out.firstFactors = "intersection of " + JSON.stringify(state.firstFactors) + " and initialised recipes";
+      out.firstFactors =
+        "intersection of " +
+        JSON.stringify(state.firstFactors) +
+        " and initialised recipes";
     }
   }
   delete out.requiredSecondaryFactors;
   out.emailPasswordEnabled = "isEmailPasswordInitialised?";
   out.passwordlessEnabled = "isPasswordlessInitialised?";
   out.thirdPartyEnabled = "isThirdPartyInitialised?";
-  res += JSON.stringify(out, null, 2).replaceAll("\\\"", "'") + "\n";
+  res += JSON.stringify(out, null, 2).replaceAll('\\"', "'") + "\n";
 
   return res;
 };
@@ -184,7 +186,7 @@ export const backendCdi51Behaviour = (tenantState) => {
 export const frontendCdi51Behaviour = (tenantState) => {
   let res = "";
 
-  res += 'ui shows: firstFactors from loginMethodsGET API';
+  res += "ui shows: firstFactors from loginMethodsGET API";
 
   return res;
-}
+};

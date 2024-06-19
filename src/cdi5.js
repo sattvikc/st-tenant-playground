@@ -218,24 +218,36 @@ export const backendCdi5Behaviour = (tenantState) => {
   res += "initialised recipes: ";
   res += "✓\n";
 
-  res += '\nfinal output: ';
+  res += "\nfinal output: ";
 
-  let out = {...state};
+  let out = { ...state };
   if (state.firstFactors === null) {
-    if (state.emailPasswordEnabled === false && state.passwordlessEnabled === false && state.thirdPartyEnabled === false) {
-      out.firstFactors = []
+    if (
+      state.emailPasswordEnabled === false &&
+      state.passwordlessEnabled === false &&
+      state.thirdPartyEnabled === false
+    ) {
+      out.firstFactors = [];
     } else {
-      out.firstFactors = "intersection of mfa init firstFactors and initialised recipes";
+      out.firstFactors =
+        "intersection of mfa init firstFactors and initialised recipes";
     }
   } else {
-    if (state.emailPasswordEnabled === false && state.passwordlessEnabled === false && state.thirdPartyEnabled === false) {
-      out.firstFactors = []
+    if (
+      state.emailPasswordEnabled === false &&
+      state.passwordlessEnabled === false &&
+      state.thirdPartyEnabled === false
+    ) {
+      out.firstFactors = [];
     } else {
-      out.firstFactors = "intersection of " + JSON.stringify(state.firstFactors) + " and initialised recipes";
+      out.firstFactors =
+        "intersection of " +
+        JSON.stringify(state.firstFactors) +
+        " and initialised recipes";
     }
   }
   delete out.requiredSecondaryFactors;
-  res += JSON.stringify(out, null, 2).replaceAll("\\\"", "'") + "\n";
+  res += JSON.stringify(out, null, 2).replaceAll('\\"', "'") + "\n";
 
   return res;
 };
@@ -245,7 +257,7 @@ export const frontendCdi5Behaviour = (tenantState) => {
 
   let res = "";
 
-  res += 'ui shows: firstFactors from loginMethodsGET API';
+  res += "ui shows: firstFactors from loginMethodsGET API";
 
   return res;
 };

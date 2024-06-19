@@ -1,9 +1,30 @@
 import React from "react";
 import { useState } from "react";
 import "./index.css";
-import { backendCdi4Behaviour, cdi4CoreBehaviour, create_4, frontendCdi4Behaviour, get_4, update_4 } from "./cdi4";
-import { backendCdi5Behaviour, cdi5CoreBehaviour, create_5, frontendCdi5Behaviour, get_5, update_5 } from "./cdi5";
-import { backendCdi51Behaviour, cdi51CoreBehaviour, create_v2, frontendCdi51Behaviour, get_v2, update_v2 } from "./cdi51";
+import {
+  backendCdi4Behaviour,
+  cdi4CoreBehaviour,
+  create_4,
+  frontendCdi4Behaviour,
+  get_4,
+  update_4,
+} from "./cdi4";
+import {
+  backendCdi5Behaviour,
+  cdi5CoreBehaviour,
+  create_5,
+  frontendCdi5Behaviour,
+  get_5,
+  update_5,
+} from "./cdi5";
+import {
+  backendCdi51Behaviour,
+  cdi51CoreBehaviour,
+  create_v2,
+  frontendCdi51Behaviour,
+  get_v2,
+  update_v2,
+} from "./cdi51";
 
 export default function App(props) {
   const [tenantState, setTenantState] = useState({
