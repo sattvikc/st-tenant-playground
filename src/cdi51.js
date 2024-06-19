@@ -202,8 +202,20 @@ export const backendCdi51Behaviour = (tenantState) => {
   return res;
 };
 
-export const frontendCdi51Behaviour = (tenantState) => {
+export const getv2FrontendLoginMethods = (tenantState) => {
   let state = get_v2(tenantState);
+
+  let firstFactors;
+  if (state.firstFactors === null) {
+    firstFactors = [...allFirstFactors];
+  } else {
+    firstFactors = [...state.firstFactors];
+  }
+
+  return firstFactors.length === 0 ? "none" : firstFactors.join(" ");
+};
+
+export const frontendCdi51Behaviour = (tenantState) => {
   let res = "";
 
   res += "loginMethodsGET: ";
@@ -217,16 +229,7 @@ export const frontendCdi51Behaviour = (tenantState) => {
 
   res += "\n";
 
-  let firstFactors;
-  if (state.firstFactors === null) {
-    firstFactors = [...allFirstFactors];
-  } else {
-    firstFactors = [...state.firstFactors];
-  }
-
-  res +=
-    "ui shows: " +
-    (firstFactors.length === 0 ? "none" : firstFactors.join(" "));
+  res += "ui shows: " + getv2FrontendLoginMethods(tenantState) + "\n";
 
   return res;
 };

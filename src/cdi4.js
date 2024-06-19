@@ -47,7 +47,10 @@ export const update_4 = (body, currentState) => {
   if (
     body.emailPasswordEnabled === false ||
     body.passwordlessEnabled === false ||
-    body.thirdPartyEnabled === false
+    body.thirdPartyEnabled === false ||
+    newTenantState.emailPasswordEnabled === false ||
+    newTenantState.passwordlessEnabled === false ||
+    newTenantState.thirdPartyEnabled === false
   ) {
     if (firstFactors === null) {
       firstFactors = [...allFirstFactors];
@@ -201,18 +204,9 @@ export const backendCdi4Behaviour = (tenantState) => {
   return res;
 };
 
-export const frontendCdi4Behaviour = (tenantState) => {
+export const getCdi4FrontendLoginMethods = (tenantState) => {
   let state = get_4(tenantState);
 
-  let res = "";
-
-  res += "loginMethodsGET: ";
-  res += "✓\n";
-
-  res += "initialised recipes: ";
-  res += "✓\n";
-
-  res += "\n";
   let loginMethods = "";
   if (state.emailPasswordEnabled) {
     loginMethods += " emailpassword";
@@ -232,7 +226,21 @@ export const frontendCdi4Behaviour = (tenantState) => {
     loginMethods = " none";
   }
 
-  res += "ui shows:" + loginMethods;
+  return loginMethods;
+};
+
+export const frontendCdi4Behaviour = (tenantState) => {
+  let res = "";
+
+  res += "loginMethodsGET: ";
+  res += "✓\n";
+
+  res += "initialised recipes: ";
+  res += "✓\n";
+
+  res += "\n";
+
+  res += "ui shows:" + getCdi4FrontendLoginMethods(tenantState) + "\n";
 
   return res;
 };

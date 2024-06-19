@@ -26,6 +26,7 @@ import {
   get_v2,
   update_v2,
 } from "./cdi51";
+import { runTests } from "./tests";
 
 export default function App(props) {
   const [tenantState, setTenantState] = useState({
@@ -787,6 +788,16 @@ export default function App(props) {
         </div>
       </div>
 
+      <div>
+        <p>Open console before running tests</p>
+        <button
+          onClick={() => {
+            runTests();
+          }}
+        >
+          Run tests
+        </button>
+      </div>
       <div className="error">{errorMsg}</div>
     </div>
   );

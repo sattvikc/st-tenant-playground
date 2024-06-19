@@ -343,21 +343,8 @@ export const backendCdi5Behaviour = (tenantState) => {
   return res;
 };
 
-export const frontendCdi5Behaviour = (tenantState) => {
+export const getCdi5FrontendLoginMethods = (tenantState) => {
   let state = get_5(tenantState);
-
-  let res = "";
-
-  res += "loginMethodsGET: ";
-  res += "✓\n";
-
-  res += "initialised recipes: ";
-  res += "✓\n";
-
-  res += "mfa init firstFactors: ";
-  res += "✗\n";
-
-  res += "\n";
 
   let firstFactors;
   if (state.firstFactors === null) {
@@ -394,9 +381,24 @@ export const frontendCdi5Behaviour = (tenantState) => {
     }
   }
 
-  res +=
-    "ui shows: " +
-    (firstFactors.length === 0 ? "none" : firstFactors.join(" "));
+  return firstFactors.length === 0 ? "none" : firstFactors.join(" ");
+};
+
+export const frontendCdi5Behaviour = (tenantState) => {
+  let res = "";
+
+  res += "loginMethodsGET: ";
+  res += "✓\n";
+
+  res += "initialised recipes: ";
+  res += "✓\n";
+
+  res += "mfa init firstFactors: ";
+  res += "✗\n";
+
+  res += "\n";
+
+  res += "ui shows: " + getCdi5FrontendLoginMethods(tenantState) + "\n";
 
   return res;
 };
