@@ -162,22 +162,24 @@ export const backendCdi4Behaviour = (tenantState) => {
 
 export const frontendCdi4Behaviour = (tenantState) => {
   let state = get_4(tenantState);
-  let res = 'If using dynamic login methods, frontend will show these login methods:';
+
+  let res = '';
+  let loginMethods = '';
   if (state.emailPasswordEnabled) {
-    res += ' emailpassword';
+    loginMethods += ' emailpassword';
   }
   if (state.passwordlessEnabled) {
-    res += ' passwordless';
+    loginMethods += ' passwordless';
   }
   if (state.thirdPartyEnabled) {
-    res += ' thirdparty';
+    loginMethods += ' thirdparty';
   }
 
   if (state.emailPasswordEnabled === false && state.passwordlessEnabled === false && state.thirdPartyEnabled === false) {
-    res += ' None';
+    loginMethods = ' none'
   }
 
-  res += '\n';
-  res += 'Else, frontend will show statically defined login methods\n'
-  return res
+  res += 'ui shows:' + loginMethods;
+
+  return res;
 }

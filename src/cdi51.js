@@ -139,52 +139,52 @@ export const cdi51CoreBehaviour = (tenantState) => {
 export const backendCdi51Behaviour = (tenantState) => {
   let state = get_v2(tenantState);
 
-  let res = "loginMethodsGET has the following output for firstFactors: ";
-  res += "\n";
+  let res = "";
 
-  let filteredRecipes = '';
-  if (state.emailPasswordEnabled === false) {
-      filteredRecipes += "emailpassword ";
-  }
-  if (state.passwordlessEnabled === false) {
-      filteredRecipes += "passwordless ";
-  }
-  if (state.thirdPartyEnabled === false) {
-      filteredRecipes += "thirdparty ";
-  }
-
+  res += "firstFactors from core: ";
   if (state.firstFactors === null) {
-      res += "if MFA first factors is initialised:\n";
-      if (filteredRecipes !== '') {
-          res += "  filter out " + filteredRecipes + "related factors\n";
-      } else {
-          res += "  configured firstFactors\n"
-      }
-      res += "else:\n"
-      res += "  all available factors based on initialised recipes"
-      if (filteredRecipes !== '') {
-          res += " and filtering out " + filteredRecipes + "related factors";
-      }
-      res += '\n';
+    res += "✗\n";
   } else {
-      res += "  " + JSON.stringify(state.firstFactors) + "\n";
+    res += "✓\n";
   }
-  res += "\n";
 
-  res += "loginMethodsGET returns booleans as per the initialised recipes and not based on core\n\n";
+  res += "enabled booleans in tenant: ✗\n";
 
-  if (state.requiredSecondaryFactors === null) {
-      res += "tenant doesn't require any secondary factors unless user overrides getRequirementsForAuth\n"
+  res += "mfa init firstFactors: ";
+  if (state.firstFactors !== null) {
+    res += "✗\n";
   } else {
-      res += "tenant will require one of " + JSON.stringify(state.requiredSecondaryFactors) + " as secondary factor unless user overrides getRequirementsForAuth\n";
+    res += "✓\n";
   }
+
+  res += "initialised recipes: ";
+  res += "✓\n";
+
+  res += '\nfinal output: ';
+
+  let out = {...state};
+  if (state.firstFactors === null) {
+    out.firstFactors = "intersection of mfa init firstFactors and initialised recipes";
+  } else {
+    if (state.firstFactors.length === 0) {
+      out.firstFactors = []
+    } else {
+      out.firstFactors = "intersection of " + JSON.stringify(state.firstFactors) + " and initialised recipes";
+    }
+  }
+  delete out.requiredSecondaryFactors;
+  out.emailPasswordEnabled = "isEmailPasswordInitialised?";
+  out.passwordlessEnabled = "isPasswordlessInitialised?";
+  out.thirdPartyEnabled = "isThirdPartyInitialised?";
+  res += JSON.stringify(out, null, 2).replaceAll("\\\"", "'") + "\n";
+
   return res;
 };
 
 export const frontendCdi51Behaviour = (tenantState) => {
-  let res = 'If using dynamic login methods, frontend will use output of firstFactors to show the first factor login UI. For the secondary factors, it will be picked up from the next array determined by getRequirementsForAuth to show a login method to the user';
+  let res = "";
 
-  res += '\n\n';
-  res += 'Else, frontend will show statically defined login methods\n'
-  return res
+  res += 'ui shows: firstFactors from loginMethodsGET API';
+
+  return res;
 }
