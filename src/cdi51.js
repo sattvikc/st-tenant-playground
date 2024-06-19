@@ -10,6 +10,14 @@ let allFirstFactors = [
 export const update_v2 = (body, currentState) => {
   let newTenantState = { ...currentState };
 
+  if (
+    currentState.emailPasswordEnabled === false &&
+    currentState.passwordlessEnabled === false &&
+    currentState.thirdPartyEnabled === false
+  ) {
+    newTenantState.firstFactors = [];
+  }
+
   newTenantState.emailPasswordEnabled = true;
   newTenantState.passwordlessEnabled = true;
   newTenantState.thirdPartyEnabled = true;
@@ -164,13 +172,21 @@ export const backendCdi51Behaviour = (tenantState) => {
 
   res += "\n";
 
-  res += "\loginMethodsGET output: ";
+  res += "loginMethodsGET output: ";
 
-  let out = { 
-    emailPasswordEnabled: state.firstFactors === null || state.firstFactors.includes("emailpassword"),
-    passwordlessEnabled: state.firstFactors === null || state.firstFactors.includes("otp-phone") || state.firstFactors.includes("otp-email") || state.firstFactors.includes("link-phone") || state.firstFactors.includes("link-email"),
-    thirdPartyEnabled: state.firstFactors === null || state.firstFactors.includes("thirdparty"),
-   };
+  let out = {
+    emailPasswordEnabled:
+      state.firstFactors === null ||
+      state.firstFactors.includes("emailpassword"),
+    passwordlessEnabled:
+      state.firstFactors === null ||
+      state.firstFactors.includes("otp-phone") ||
+      state.firstFactors.includes("otp-email") ||
+      state.firstFactors.includes("link-phone") ||
+      state.firstFactors.includes("link-email"),
+    thirdPartyEnabled:
+      state.firstFactors === null || state.firstFactors.includes("thirdparty"),
+  };
   if (state.firstFactors === null) {
     out.firstFactors = [...allFirstFactors];
   } else {
@@ -201,14 +217,16 @@ export const frontendCdi51Behaviour = (tenantState) => {
 
   res += "\n";
 
-  let firstFactors
+  let firstFactors;
   if (state.firstFactors === null) {
     firstFactors = [...allFirstFactors];
   } else {
     firstFactors = [...state.firstFactors];
   }
 
-  res += "ui shows: " + (firstFactors.length === 0 ? 'none': firstFactors.join(" "));
+  res +=
+    "ui shows: " +
+    (firstFactors.length === 0 ? "none" : firstFactors.join(" "));
 
   return res;
 };

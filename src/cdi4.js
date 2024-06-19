@@ -44,7 +44,11 @@ export const update_4 = (body, currentState) => {
     }
   }
 
-  if (body.emailPasswordEnabled === false || body.passwordlessEnabled === false || body.thirdPartyEnabled === false) {
+  if (
+    body.emailPasswordEnabled === false ||
+    body.passwordlessEnabled === false ||
+    body.thirdPartyEnabled === false
+  ) {
     if (firstFactors === null) {
       firstFactors = [...allFirstFactors];
     }
@@ -106,7 +110,7 @@ export const create_4 = (body) => {
   return update_4(body, newTenantState);
 };
 
-export const create_4_migrate =(body) => {
+export const create_4_migrate = (body) => {
   let { tenantId } = body;
   let newTenantState;
   if (tenantId === "public") {
@@ -135,7 +139,7 @@ export const create_4_migrate =(body) => {
   };
 
   return newTenantState;
-}
+};
 
 export const get_4 = (tenantState) => {
   return {

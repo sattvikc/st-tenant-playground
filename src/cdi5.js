@@ -13,8 +13,60 @@ export const update_5 = (body, currentState) => {
   let firstFactors = currentState.firstFactors;
   let requiredSecondaryFactors = currentState.requiredSecondaryFactors;
 
-  if (body.emailPasswordEnabled === true || body.passwordlessEnabled === true || body.thirdPartyEnabled === true) {
-    if (newTenantState.firstFactors !== null && newTenantState.firstFactors.length === 0) {
+  if (
+    firstFactors === null &&
+    body.requiredSecondaryFactors !== undefined &&
+    body.requiredSecondaryFactors !== null
+  ) {
+    const updFirstFactors = () => {
+      firstFactors = [...allFirstFactors];
+      if (currentState.emailPasswordEnabled === false) {
+        firstFactors = firstFactors.filter(
+          (factor) => factor !== "emailpassword"
+        );
+      }
+      if (currentState.passwordlessEnabled === false) {
+        firstFactors = firstFactors.filter((factor) => factor !== "otp-phone");
+        firstFactors = firstFactors.filter((factor) => factor !== "otp-email");
+        firstFactors = firstFactors.filter((factor) => factor !== "link-phone");
+        firstFactors = firstFactors.filter((factor) => factor !== "link-email");
+      }
+      if (currentState.thirdPartyEnabled === false) {
+        firstFactors = firstFactors.filter((factor) => factor !== "thirdparty");
+      }
+    };
+
+    if (
+      currentState.emailPasswordEnabled === false &&
+      body.requiredSecondaryFactors.includes("emailpassword")
+    ) {
+      updFirstFactors();
+    }
+
+    if (
+      currentState.passwordlessEnabled === false &&
+      (body.requiredSecondaryFactors.includes("otp-phone") ||
+        body.requiredSecondaryFactors.includes("otp-email") ||
+        body.requiredSecondaryFactors.includes("link-phone") ||
+        body.requiredSecondaryFactors.includes("link-email"))
+    ) {
+      updFirstFactors();
+    }
+
+    if (
+      currentState.thirdPartyEnabled === false &&
+      body.requiredSecondaryFactors.includes("thirdparty")
+    ) {
+      updFirstFactors();
+    }
+  }
+
+  if (
+    body.emailPasswordEnabled === true ||
+    body.passwordlessEnabled === true ||
+    body.thirdPartyEnabled === true
+  ) {
+    if (firstFactors !== null && firstFactors.length === 0) {
       firstFactors = null;
       newTenantState.emailPasswordEnabled = false;
       newTenantState.passwordlessEnabled = false;
@@ -162,14 +214,34 @@ export const create_5 = (body) => {
     };
   }
 
-  return update_5(body, newTenantState);
+  const { emailPasswordEnabled, passwordlessEnabled, thirdPartyEnabled } = body;
+  newTenantState = update_5(
+    { emailPasswordEnabled, passwordlessEnabled, thirdPartyEnabled },
+    newTenantState
+  );
+  const { firstFactors, requiredSecondaryFactors } = body;
+  newTenantState = update_5(
+    { firstFactors, requiredSecondaryFactors },
+    newTenantState
+  );
+
+  return newTenantState;
 };
 
 export const get_5 = (tenantState) => {
   return {
-    emailPasswordEnabled: tenantState.emailPasswordEnabled && (tenantState.firstFactors === null || tenantState.firstFactors.length > 0),
-    thirdPartyEnabled: tenantState.thirdPartyEnabled && (tenantState.firstFactors === null || tenantState.firstFactors.length > 0),
-    passwordlessEnabled: tenantState.passwordlessEnabled && (tenantState.firstFactors === null || tenantState.firstFactors.length > 0),
+    emailPasswordEnabled:
+      tenantState.emailPasswordEnabled &&
+      (tenantState.firstFactors === null ||
+        tenantState.firstFactors.length > 0),
+    thirdPartyEnabled:
+      tenantState.thirdPartyEnabled &&
+      (tenantState.firstFactors === null ||
+        tenantState.firstFactors.length > 0),
+    passwordlessEnabled:
+      tenantState.passwordlessEnabled &&
+      (tenantState.firstFactors === null ||
+        tenantState.firstFactors.length > 0),
     firstFactors:
       tenantState.firstFactors !== null && tenantState.firstFactors.length === 0
         ? null
@@ -287,7 +359,7 @@ export const frontendCdi5Behaviour = (tenantState) => {
 
   res += "\n";
 
-  let firstFactors
+  let firstFactors;
   if (state.firstFactors === null) {
     firstFactors = [...allFirstFactors];
     if (state.emailPasswordEnabled === false) {
@@ -322,7 +394,9 @@ export const frontendCdi5Behaviour = (tenantState) => {
     }
   }
 
-  res += "ui shows: " + (firstFactors.length === 0 ? 'none': firstFactors.join(" "));
+  res +=
+    "ui shows: " +
+    (firstFactors.length === 0 ? "none" : firstFactors.join(" "));
 
   return res;
 };
