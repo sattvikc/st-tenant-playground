@@ -152,11 +152,15 @@ export const cdi4CoreBehaviour = (tenantState) => {
 export const backendCdi4Behaviour = (tenantState) => {
   let state = get_4(tenantState);
 
-  let res = "loginMethodsGET API returns: ";
-  res += JSON.stringify(state, null, 2);
+  let res = "";
+
+  res += "enabled booleans in tenant: ✓\n";
+  res += "initialised recipes: ";
+  res += "✗\n";
+
   res += "\n";
-  res +=
-    "Backend does not use the booleans, but relies on core to block or allow the APIs\n";
+  res += "loginMethodsGET output: ";
+  res += JSON.stringify(state, null, 2);
   return res;
 };
 
@@ -164,12 +168,20 @@ export const frontendCdi4Behaviour = (tenantState) => {
   let state = get_4(tenantState);
 
   let res = "";
+
+  res += "loginMethodsGET: ";
+  res += "✓\n";
+
+  res += "initialised recipes: ";
+  res += "✓\n";
+
+  res += "\n";
   let loginMethods = "";
   if (state.emailPasswordEnabled) {
     loginMethods += " emailpassword";
   }
   if (state.passwordlessEnabled) {
-    loginMethods += " passwordless";
+    loginMethods += " otp-phone otp-email link-phone link-email";
   }
   if (state.thirdPartyEnabled) {
     loginMethods += " thirdparty";

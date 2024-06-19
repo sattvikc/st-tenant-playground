@@ -218,33 +218,43 @@ export const backendCdi5Behaviour = (tenantState) => {
   res += "initialised recipes: ";
   res += "✓\n";
 
-  res += "\nfinal output: ";
+  res += "\nloginMethodsGET output: ";
 
   let out = { ...state };
   if (state.firstFactors === null) {
-    if (
-      state.emailPasswordEnabled === false &&
-      state.passwordlessEnabled === false &&
-      state.thirdPartyEnabled === false
-    ) {
-      out.firstFactors = [];
-    } else {
-      out.firstFactors =
-        "intersection of mfa init firstFactors and initialised recipes";
+    let firstFactors = [...allFirstFactors];
+    if (state.emailPasswordEnabled === false) {
+      firstFactors = firstFactors.filter(
+        (factor) => factor !== "emailpassword"
+      );
     }
+    if (state.passwordlessEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-email");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-email");
+    }
+    if (state.thirdPartyEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "thirdparty");
+    }
+    out.firstFactors = firstFactors;
   } else {
-    if (
-      state.emailPasswordEnabled === false &&
-      state.passwordlessEnabled === false &&
-      state.thirdPartyEnabled === false
-    ) {
-      out.firstFactors = [];
-    } else {
-      out.firstFactors =
-        "intersection of " +
-        JSON.stringify(state.firstFactors) +
-        " and initialised recipes";
+    let firstFactors = [...state.firstFactors];
+    if (state.emailPasswordEnabled === false) {
+      firstFactors = firstFactors.filter(
+        (factor) => factor !== "emailpassword"
+      );
     }
+    if (state.passwordlessEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-email");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-email");
+    }
+    if (state.thirdPartyEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "thirdparty");
+    }
+    out.firstFactors = firstFactors;
   }
   delete out.requiredSecondaryFactors;
   res += JSON.stringify(out, null, 2).replaceAll('\\"', "'") + "\n";
@@ -257,7 +267,53 @@ export const frontendCdi5Behaviour = (tenantState) => {
 
   let res = "";
 
-  res += "ui shows: firstFactors from loginMethodsGET API";
+  res += "loginMethodsGET: ";
+  res += "✓\n";
+
+  res += "initialised recipes: ";
+  res += "✓\n";
+
+  res += "mfa init firstFactors: ";
+  res += "✗\n";
+
+  res += "\n";
+
+  let firstFactors
+  if (state.firstFactors === null) {
+    firstFactors = [...allFirstFactors];
+    if (state.emailPasswordEnabled === false) {
+      firstFactors = firstFactors.filter(
+        (factor) => factor !== "emailpassword"
+      );
+    }
+    if (state.passwordlessEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-email");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-email");
+    }
+    if (state.thirdPartyEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "thirdparty");
+    }
+  } else {
+    firstFactors = [...state.firstFactors];
+    if (state.emailPasswordEnabled === false) {
+      firstFactors = firstFactors.filter(
+        (factor) => factor !== "emailpassword"
+      );
+    }
+    if (state.passwordlessEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "otp-email");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-phone");
+      firstFactors = firstFactors.filter((factor) => factor !== "link-email");
+    }
+    if (state.thirdPartyEnabled === false) {
+      firstFactors = firstFactors.filter((factor) => factor !== "thirdparty");
+    }
+  }
+
+  res += "ui shows: " + (firstFactors.length === 0 ? 'none': firstFactors.join(" "));
 
   return res;
 };

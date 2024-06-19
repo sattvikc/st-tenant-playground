@@ -158,35 +158,53 @@ export const backendCdi51Behaviour = (tenantState) => {
   res += "initialised recipes: ";
   res += "✓\n";
 
-  res += "\nfinal output: ";
+  res += "\n";
 
-  let out = { ...state };
+  res += "\loginMethodsGET output: ";
+
+  let out = { 
+    emailPasswordEnabled: state.firstFactors === null || state.firstFactors.includes("emailpassword"),
+    passwordlessEnabled: state.firstFactors === null || state.firstFactors.includes("otp-phone") || state.firstFactors.includes("otp-email") || state.firstFactors.includes("link-phone") || state.firstFactors.includes("link-email"),
+    thirdPartyEnabled: state.firstFactors === null || state.firstFactors.includes("thirdparty"),
+   };
   if (state.firstFactors === null) {
-    out.firstFactors =
-      "intersection of mfa init firstFactors and initialised recipes";
+    out.firstFactors = [...allFirstFactors];
   } else {
     if (state.firstFactors.length === 0) {
       out.firstFactors = [];
     } else {
-      out.firstFactors =
-        "intersection of " +
-        JSON.stringify(state.firstFactors) +
-        " and initialised recipes";
+      out.firstFactors = state.firstFactors;
     }
   }
   delete out.requiredSecondaryFactors;
-  out.emailPasswordEnabled = "isEmailPasswordInitialised?";
-  out.passwordlessEnabled = "isPasswordlessInitialised?";
-  out.thirdPartyEnabled = "isThirdPartyInitialised?";
   res += JSON.stringify(out, null, 2).replaceAll('\\"', "'") + "\n";
 
   return res;
 };
 
 export const frontendCdi51Behaviour = (tenantState) => {
+  let state = get_v2(tenantState);
   let res = "";
 
-  res += "ui shows: firstFactors from loginMethodsGET API";
+  res += "loginMethodsGET: ";
+  res += "✓\n";
+
+  res += "initialised recipes: ";
+  res += "✓\n";
+
+  res += "mfa init firstFactors: ";
+  res += "✗\n";
+
+  res += "\n";
+
+  let firstFactors
+  if (state.firstFactors === null) {
+    firstFactors = [...allFirstFactors];
+  } else {
+    firstFactors = [...state.firstFactors];
+  }
+
+  res += "ui shows: " + (firstFactors.length === 0 ? 'none': firstFactors.join(" "));
 
   return res;
 };
