@@ -45,26 +45,48 @@ export default function App(props) {
         <div>
           <h4>Core behaviour</h4>
           <pre>{cdi4CoreBehaviour(tenantState)}</pre>
-          <h4>Backend behaviour</h4>
-          <pre>{backendCdi4Behaviour(tenantState)}</pre>
-          <h4>Frontend behaviour</h4>
-          <pre>{frontendCdi4Behaviour(tenantState)}</pre>
         </div>
 
         <div>
           <h4>Core behaviour</h4>
           <pre>{cdi5CoreBehaviour(tenantState)}</pre>
-          <h4>Backend behaviour</h4>
-          <pre>{backendCdi5Behaviour(tenantState)}</pre>
-          <h4>Frontend behaviour</h4>
-          <pre>{frontendCdi5Behaviour(tenantState)}</pre>
         </div>
 
         <div>
           <h4>Core behaviour</h4>
           <pre>{cdi51CoreBehaviour(tenantState)}</pre>
+        </div>
+      </div>
+
+      <div className="row">
+        <div>
+          <h4>Backend behaviour</h4>
+          <pre>{backendCdi4Behaviour(tenantState)}</pre>
+        </div>
+
+        <div>
+          <h4>Backend behaviour</h4>
+          <pre>{backendCdi5Behaviour(tenantState)}</pre>
+        </div>
+
+        <div>
           <h4>Backend behaviour</h4>
           <pre>{backendCdi51Behaviour(tenantState)}</pre>
+        </div>
+      </div>
+
+      <div className="row">
+        <div>
+          <h4>Frontend behaviour</h4>
+          <pre>{frontendCdi4Behaviour(tenantState)}</pre>
+        </div>
+
+        <div>
+          <h4>Frontend behaviour</h4>
+          <pre>{frontendCdi5Behaviour(tenantState)}</pre>
+        </div>
+
+        <div>
           <h4>Frontend behaviour</h4>
           <pre>{frontendCdi51Behaviour(tenantState)}</pre>
         </div>
