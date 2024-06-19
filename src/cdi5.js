@@ -170,79 +170,103 @@ export const get_5 = (tenantState) => {
 };
 
 export const cdi5CoreBehaviour = (tenantState) => {
-    let state = get_5(tenantState);
-    let res = "";
-  
-    if (state.emailPasswordEnabled === false) {
-      res += "emailpassword APIs are blocked\n";
-    } else {
-      res += "emailpassword APIs are allowed\n";
-    }
-  
-    if (state.passwordlessEnabled === false) {
-      res += "passwordless APIs are blocked\n";
-    } else {
-      res += "passwordless APIs are allowed\n";
-    }
-  
-    if (state.thirdPartyEnabled === false) {
-      res += "thirdParty APIs are blocked\n";
-    } else {
-      res += "thirdParty APIs are allowed\n";
-    }
-  
-    return res;
-  };
+  let state = get_5(tenantState);
+  let res = "";
+
+  if (state.emailPasswordEnabled === false) {
+    res += "emailpassword APIs are blocked\n";
+  } else {
+    res += "emailpassword APIs are allowed\n";
+  }
+
+  if (state.passwordlessEnabled === false) {
+    res += "passwordless APIs are blocked\n";
+  } else {
+    res += "passwordless APIs are allowed\n";
+  }
+
+  if (state.thirdPartyEnabled === false) {
+    res += "thirdParty APIs are blocked\n";
+  } else {
+    res += "thirdParty APIs are allowed\n";
+  }
+
+  return res;
+};
 
 export const backendCdi5Behaviour = (tenantState) => {
-    let state = get_5(tenantState);
-  
-    let res = "loginMethodsGET has the following output for firstFactors: ";
-    res += "\n";
+  let state = get_5(tenantState);
 
-    let filteredRecipes = '';
-    if (state.emailPasswordEnabled === false) {
-        filteredRecipes += "emailpassword ";
-    }
-    if (state.passwordlessEnabled === false) {
-        filteredRecipes += "passwordless ";
-    }
-    if (state.thirdPartyEnabled === false) {
-        filteredRecipes += "thirdparty ";
-    }
+  let res = "loginMethodsGET has the following output for firstFactors: ";
+  res += "\n";
 
-    if (state.firstFactors === null) {
-        res += "if MFA first factors is initialised:\n";
-        if (filteredRecipes !== '') {
-            res += "  filter out " + filteredRecipes + "related factors\n";
-        } else {
-            res += "  configured firstFactors\n"
-        }
-        res += "else:\n"
-        res += "  all available factors based on initialised recipes"
-        if (filteredRecipes !== '') {
-            res += " and filtering out " + filteredRecipes + "related factors";
-        }
-        res += '\n';
-    } else {
-        res += "  " + JSON.stringify(state.firstFactors) + "\n";
-    }
-    res += "\n";
-
-    res += "loginMethodsGET also returns booleans as per the output above\n\n";
-
-    if (state.requiredSecondaryFactors === null) {
-        res += "tenant doesn't require any secondary factors unless user overrides getRequirementsForAuth\n"
-    } else {
-        res += "tenant will require one of " + JSON.stringify(state.requiredSecondaryFactors) + " as secondary factor unless user overrides getRequirementsForAuth\n";
-    }
-    return res;
-  };
-  
-  export const frontendCdi5Behaviour = (tenantState) => {
-    let res = 'If using dynamic login methods, frontend will use output of firstFactors to show the first factor login UI. For the secondary factors, it will be picked up from the next array determined by getRequirementsForAuth and then uses the booleans to determine if a login method can be shown to the user';
-  
-    res += '\n\n';
-    res += 'Else, frontend will show statically defined login methods\n'
-    return res
+  let filteredRecipes = "";
+  if (state.emailPasswordEnabled === false) {
+    filteredRecipes += "emailpassword ";
   }
+  if (state.passwordlessEnabled === false) {
+    filteredRecipes += "passwordless ";
+  }
+  if (state.thirdPartyEnabled === false) {
+    filteredRecipes += "thirdparty ";
+  }
+
+  if (state.firstFactors === null) {
+    res += "if MFA first factors is initialised:\n";
+    if (
+      state.emailPasswordEnabled === false &&
+      state.passwordlessEnabled === false &&
+      state.thirdPartyEnabled === false
+    ) {
+      res += "  empty first factors (since all recipes are disabled)\n";
+    } else {
+      if (filteredRecipes !== "") {
+        res +=
+          "  configured firstFactors filtering out " +
+          filteredRecipes +
+          "related factors\n";
+      } else {
+        res += "  configured firstFactors\n";
+      }
+    }
+    res += "else:\n";
+    if (
+      state.emailPasswordEnabled === false &&
+      state.passwordlessEnabled === false &&
+      state.thirdPartyEnabled === false
+    ) {
+      res += "  empty first factors (since all recipes are disabled)";
+    } else {
+      res += "  all available factors based on initialised recipes";
+      if (filteredRecipes !== "") {
+        res += " and filtering out " + filteredRecipes + "related factors";
+      }
+    }
+    res += "\n";
+  } else {
+    res += "  " + JSON.stringify(state.firstFactors) + "\n";
+  }
+  res += "\n";
+
+  res += "loginMethodsGET also returns booleans as per the output above\n\n";
+
+  if (state.requiredSecondaryFactors === null) {
+    res +=
+      "tenant doesn't require any secondary factors unless user overrides getRequirementsForAuth\n";
+  } else {
+    res +=
+      "tenant will require one of " +
+      JSON.stringify(state.requiredSecondaryFactors) +
+      " as secondary factor unless user overrides getRequirementsForAuth\n";
+  }
+  return res;
+};
+
+export const frontendCdi5Behaviour = (tenantState) => {
+  let res =
+    "If using dynamic login methods, frontend will use output of firstFactors to show the first factor login UI. For the secondary factors, it will be picked up from the next array determined by getRequirementsForAuth and then uses the booleans to determine if a login method can be shown to the user";
+
+  res += "\n\n";
+  res += "Else, frontend will show statically defined login methods\n";
+  return res;
+};
