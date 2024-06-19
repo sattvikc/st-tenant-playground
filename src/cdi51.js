@@ -171,7 +171,7 @@ export const backendCdi51Behaviour = (tenantState) => {
   }
   res += "\n";
 
-  res += "loginMethodsGET also returns booleans as per all the initialised recipes and not based on core\n\n";
+  res += "loginMethodsGET returns booleans as per the initialised recipes and not based on core\n\n";
 
   if (state.requiredSecondaryFactors === null) {
       res += "tenant doesn't require any secondary factors unless user overrides getRequirementsForAuth\n"
