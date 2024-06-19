@@ -120,7 +120,7 @@ export const update_5 = (body, currentState) => {
     requiredSecondaryFactors !== null &&
     requiredSecondaryFactors.length === 0
   ) {
-    requiredSecondaryFactors = ["_st_unsupported"];
+    requiredSecondaryFactors = null;
   }
 
   newTenantState.firstFactors = firstFactors;
@@ -163,7 +163,7 @@ export const get_5 = (tenantState) => {
     passwordlessEnabled: tenantState.passwordlessEnabled,
     firstFactors:
       tenantState.firstFactors !== null && tenantState.firstFactors.length === 0
-        ? ["_st_unsupported"]
+        ? null
         : tenantState.firstFactors,
     requiredSecondaryFactors: tenantState.requiredSecondaryFactors,
   };
@@ -246,4 +246,3 @@ export const backendCdi5Behaviour = (tenantState) => {
     res += 'Else, frontend will show statically defined login methods\n'
     return res
   }
-  

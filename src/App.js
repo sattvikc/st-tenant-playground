@@ -21,8 +21,6 @@ export default function App(props) {
   const [cdi5body, setCdi5Body] = useState('{\n  "tenantId": "public"\n}');
   const [v2body, setV2Body] = useState('{\n  "tenantId": "public"\n}');
 
-
-
   return (
     <div className="App">
       <h3>DB State</h3>
