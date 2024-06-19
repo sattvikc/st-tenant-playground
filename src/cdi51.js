@@ -10,6 +10,10 @@ let allFirstFactors = [
 export const update_v2 = (body, currentState) => {
   let newTenantState = { ...currentState };
 
+  newTenantState.emailPasswordEnabled = true;
+  newTenantState.passwordlessEnabled = true;
+  newTenantState.thirdPartyEnabled = true;
+
   if (body.firstFactors !== undefined) {
     newTenantState.firstFactors = body.firstFactors;
 

@@ -13,6 +13,15 @@ export const update_5 = (body, currentState) => {
   let firstFactors = currentState.firstFactors;
   let requiredSecondaryFactors = currentState.requiredSecondaryFactors;
 
+  if (body.emailPasswordEnabled === true || body.passwordlessEnabled === true || body.thirdPartyEnabled === true) {
+    if (newTenantState.firstFactors !== null && newTenantState.firstFactors.length === 0) {
+      firstFactors = null;
+      newTenantState.emailPasswordEnabled = false;
+      newTenantState.passwordlessEnabled = false;
+      newTenantState.thirdPartyEnabled = false;
+    }
+  }
+
   if (body.emailPasswordEnabled === true) {
     newTenantState.emailPasswordEnabled = true;
   }
