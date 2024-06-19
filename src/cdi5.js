@@ -158,9 +158,9 @@ export const create_5 = (body) => {
 
 export const get_5 = (tenantState) => {
   return {
-    emailPasswordEnabled: tenantState.emailPasswordEnabled,
-    thirdPartyEnabled: tenantState.thirdPartyEnabled,
-    passwordlessEnabled: tenantState.passwordlessEnabled,
+    emailPasswordEnabled: tenantState.emailPasswordEnabled && (tenantState.firstFactors === null || tenantState.firstFactors.length > 0),
+    thirdPartyEnabled: tenantState.thirdPartyEnabled && (tenantState.firstFactors === null || tenantState.firstFactors.length > 0),
+    passwordlessEnabled: tenantState.passwordlessEnabled && (tenantState.firstFactors === null || tenantState.firstFactors.length > 0),
     firstFactors:
       tenantState.firstFactors !== null && tenantState.firstFactors.length === 0
         ? null

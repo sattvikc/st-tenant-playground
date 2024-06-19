@@ -150,9 +150,21 @@ export default function App(props) {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  let state = JSON.parse(cdi4body);
-                  state.tenantId = "public";
-                  setCdi4Body(JSON.stringify(state, null, 2));
+                  {
+                    let state = JSON.parse(cdi4body);
+                    state.tenantId = "public";
+                    setCdi4Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(cdi5body);
+                    state.tenantId = "public";
+                    setCdi5Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(v2body);
+                    state.tenantId = "public";
+                    setV2Body(JSON.stringify(state, null, 2));
+                  }
                 }}
               >
                 public
@@ -163,9 +175,21 @@ export default function App(props) {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  let state = JSON.parse(cdi4body);
-                  state.tenantId = "t1";
-                  setCdi4Body(JSON.stringify(state, null, 2));
+                  {
+                    let state = JSON.parse(cdi4body);
+                    state.tenantId = "t1";
+                    setCdi4Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(cdi5body);
+                    state.tenantId = "t1";
+                    setCdi5Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(v2body);
+                    state.tenantId = "t1";
+                    setV2Body(JSON.stringify(state, null, 2));
+                  }
                 }}
               >
                 t1
@@ -329,9 +353,21 @@ export default function App(props) {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  let state = JSON.parse(cdi5body);
-                  state.tenantId = "public";
-                  setCdi5Body(JSON.stringify(state, null, 2));
+                  {
+                    let state = JSON.parse(cdi4body);
+                    state.tenantId = "public";
+                    setCdi4Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(cdi5body);
+                    state.tenantId = "public";
+                    setCdi5Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(v2body);
+                    state.tenantId = "public";
+                    setV2Body(JSON.stringify(state, null, 2));
+                  }
                 }}
               >
                 public
@@ -342,9 +378,21 @@ export default function App(props) {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  let state = JSON.parse(cdi5body);
-                  state.tenantId = "t1";
-                  setCdi5Body(JSON.stringify(state, null, 2));
+                  {
+                    let state = JSON.parse(cdi4body);
+                    state.tenantId = "t1";
+                    setCdi4Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(cdi5body);
+                    state.tenantId = "t1";
+                    setCdi5Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(v2body);
+                    state.tenantId = "t1";
+                    setV2Body(JSON.stringify(state, null, 2));
+                  }
                 }}
               >
                 t1
@@ -589,9 +637,21 @@ export default function App(props) {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  let state = JSON.parse(v2body);
-                  state.tenantId = "public";
-                  setV2Body(JSON.stringify(state, null, 2));
+                  {
+                    let state = JSON.parse(cdi4body);
+                    state.tenantId = "public";
+                    setCdi4Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(cdi5body);
+                    state.tenantId = "public";
+                    setCdi5Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(v2body);
+                    state.tenantId = "public";
+                    setV2Body(JSON.stringify(state, null, 2));
+                  }
                 }}
               >
                 public
@@ -601,10 +661,21 @@ export default function App(props) {
                 className="clickable"
                 href="#"
                 onClick={(e) => {
-                  e.preventDefault();
-                  let state = JSON.parse(v2body);
-                  state.tenantId = "t1";
-                  setV2Body(JSON.stringify(state, null, 2));
+                  {
+                    let state = JSON.parse(cdi4body);
+                    state.tenantId = "t1";
+                    setCdi4Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(cdi5body);
+                    state.tenantId = "t1";
+                    setCdi5Body(JSON.stringify(state, null, 2));
+                  }
+                  {
+                    let state = JSON.parse(v2body);
+                    state.tenantId = "t1";
+                    setV2Body(JSON.stringify(state, null, 2));
+                  }
                 }}
               >
                 t1

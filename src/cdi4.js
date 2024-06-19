@@ -11,10 +11,6 @@ export const update_4 = (body, currentState) => {
   let newTenantState = { ...currentState };
 
   let firstFactors = currentState.firstFactors;
-  if (firstFactors === null) {
-    firstFactors = [...allFirstFactors];
-  }
-
   if (body.emailPasswordEnabled === true) {
     newTenantState.emailPasswordEnabled = true;
     if (firstFactors !== null) {
@@ -45,6 +41,12 @@ export const update_4 = (body, currentState) => {
       if (!firstFactors.includes("thirdparty")) {
         firstFactors.push("thirdparty");
       }
+    }
+  }
+
+  if (body.emailPasswordEnabled === false || body.passwordlessEnabled === false || body.thirdPartyEnabled === false) {
+    if (firstFactors === null) {
+      firstFactors = [...allFirstFactors];
     }
   }
 
@@ -87,7 +89,7 @@ export const create_4 = (body) => {
       emailPasswordEnabled: true,
       passwordlessEnabled: true,
       thirdPartyEnabled: true,
-      firstFactors: [...allFirstFactors],
+      firstFactors: null,
       requiredSecondaryFactors: null,
     };
   } else {
