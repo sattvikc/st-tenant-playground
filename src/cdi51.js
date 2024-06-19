@@ -8,7 +8,7 @@ let allFirstFactors = [
 ];
 
 export const update_v2 = (body, currentState) => {
-  let newTenantState = { ...get_v2(currentState) };
+  let newTenantState = { ...currentState, ...get_v2(currentState) };
 
   if (
     currentState.emailPasswordEnabled === false &&
