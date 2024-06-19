@@ -106,6 +106,37 @@ export const create_4 = (body) => {
   return update_4(body, newTenantState);
 };
 
+export const create_4_migrate =(body) => {
+  let { tenantId } = body;
+  let newTenantState;
+  if (tenantId === "public") {
+    newTenantState = {
+      tenantId,
+      emailPasswordEnabled: true,
+      passwordlessEnabled: true,
+      thirdPartyEnabled: true,
+      firstFactors: null,
+      requiredSecondaryFactors: null,
+    };
+  } else {
+    newTenantState = {
+      tenantId,
+      emailPasswordEnabled: false,
+      passwordlessEnabled: false,
+      thirdPartyEnabled: false,
+      firstFactors: null,
+      requiredSecondaryFactors: null,
+    };
+  }
+
+  newTenantState = {
+    ...newTenantState,
+    ...body,
+  };
+
+  return newTenantState;
+}
+
 export const get_4 = (tenantState) => {
   return {
     emailPasswordEnabled:

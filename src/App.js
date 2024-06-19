@@ -5,6 +5,7 @@ import {
   backendCdi4Behaviour,
   cdi4CoreBehaviour,
   create_4,
+  create_4_migrate,
   frontendCdi4Behaviour,
   get_4,
   update_4,
@@ -131,6 +132,13 @@ export default function App(props) {
             }}
           >
             Create
+          </button>
+          <button
+            onClick={() => {
+              setTenantState(create_4_migrate(JSON.parse(cdi4body)));
+            }}
+          >
+            Create &amp; migrate
           </button>
           <button
             onClick={() => {
